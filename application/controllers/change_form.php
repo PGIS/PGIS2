@@ -8,12 +8,21 @@ class Change_form extends CI_Controller{
         
         if(!$this->session->userdata('logged_in')){
             redirect('logout');
-        }elseif ($this->session->userdata('user_role')!='applicant') {
-             redirect('logout');
         }
     }
     function index() {
-        $this->load->view('application/chang_pwd');
+      
+        if ($this->session->userdata('user_role')=='applicant') {
+              $this->load->view('application/chang_pwd'); 
+        }elseif ($this->session->userdata('user_role')=='Admision staff') {
+            $this->load->view('Admision/chang_pwd'); 
+        }elseif ($this->session->userdata('user_role')=='Finance staff') {
+            $this->load->view('finance/chang_pwd'); 
+        }elseif ($this->session->userdata('user_role')=='administrator') {
+            $this->load->view('admin/chang_pwd');
+         }elseif ($this->session->userdata('user_role')=='Student') {
+            $this->load->view('registration/chang_pwd');
+         }
     }
     function change() {
         $this->load->helper('form','url');
@@ -33,13 +42,21 @@ class Change_form extends CI_Controller{
             if($sql){
               $query=$this->db->query("update tb_user set password='$npassword' where password='{$opassword}' and userid='$sn'");
               if($query){  
-              $data['error_message']='<font color=blue>Password changed successively</font>';
-              $this->load->view('chang_pwd',$data);
+              $data['suc_message']='<font color=blue>Password changed successively</font>';
+              if ($this->session->userdata('user_role')=='applicant') {
+                 $this->load->view('application/chang_pwd',$data); 
+                }elseif ($this->session->userdata('user_role')=='Admision staff') {
+                    $this->load->view('Admision/chang_pwd',$data);
+                }
               }
             }
               else {   
               $data['error_message']='<font color=red>Wrong password</font>';
-               $this->load->view('chang_pwd',$data);
+                if ($this->session->userdata('user_role')=='applicant') {
+                 $this->load->view('application/chang_pwd',$data); 
+                }elseif ($this->session->userdata('user_role')=='Admision staff') {
+                $this->load->view('Admision/chang_pwd',$data); 
+                }
                   }
             }
             }

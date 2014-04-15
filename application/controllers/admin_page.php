@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  class Admin_page extends CI_Controller{
-     private $limit=14;
+     private $limit=4;
      
         function __construct() {
          parent::__construct();
          $this->load->helper('form','html','url');
          $this->load->library('form_validation');
-        $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+         $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
         
         if(!$this->session->userdata('logged_in')){
             redirect('logout');
@@ -19,7 +19,7 @@
         $this->load->library('table');
         $this->load->library('pagination');
         $uri_segment=3;
-        $offset=$this->uri->segment('$uri_segment');
+        //$offset=$this->uri->segment('$uri_segment');
         $this->load->model('admin');
      // $data['results']= $this->admin->list_all();
         $data['results']= $this->admin->get_paged_list($this->limit,$offset)->result();
@@ -39,6 +39,7 @@
       $this->form_validation->set_rules('mname','middle name','trim|required|xss_clean');
       $this->form_validation->set_rules('designation','designation','trim|required|xss_clean');
       $this->form_validation->set_rules('password','password','trim|required|xss_clean');
+      $this->form_validation->set_rules('email','E-mail','trim|required|valid_email|is_unique[tb_user.email]');
       if($this->form_validation->run()===FALSE){
           $this->load->view('admin/add_page');
       }  else {
@@ -56,6 +57,20 @@
        $data['error_message']='<font color=blue>successively deleted</font>';
        redirect('admin_page',$data);
     }
+    function seminar(){
+         $this->form_validation->set_rules('day', 'day', 'required');
+          $this->form_validation->set_rules('hr', 'hour', 'required');
+          if ($this->form_validation->run() == FALSE){
+        $this->load->view('admin/seminar_reg');
+        }else{
+              $this->load->model('seminar_register');
+              $day = $this->input->post('day');
+              $hour = $this->input->post('hr');
+              $this->seminar_register->insert_seminar($day, $hour);
+               $data['smg']='<font> Thanks you have already registered your time</font>';
+               $this->load->view('admin/seminar_reg',$data);
+    }
+        }
     function search(){
         if(isset($_POST['sub'])){
         $search=trim($_POST['searchterm']);

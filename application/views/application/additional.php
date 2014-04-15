@@ -5,7 +5,7 @@
         <table class="table table-striped">
             <p>
             
-          Eidence of spornsoship  
+          Evidence of sponsorship  
         </p>
             <tr><td>How do you intend to finance your studies?</</td>
                 <td><input type="radio" name="chbx1" value="self" checked=''

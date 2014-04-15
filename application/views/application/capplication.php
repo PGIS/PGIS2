@@ -11,13 +11,13 @@
                 <a data-target=".home" data-toggle="tab">Personal information</a>
               </li>
               <li class="<?php if(isset($active3)){echo 'active';}?>">
-                <a data-target=".emprecod" data-toggle="tab">Employement Details</a>
+                <a data-target=".emprecod" data-toggle="tab">Employment Details</a>
               </li>
               <li class="<?php if(isset($active4)){echo 'active';}?>">
                 <a data-target=".accadem" data-toggle="tab">Education Background</a>
               </li>
               <li class="<?php if(isset($active5)){echo 'active';}?>">
-                <a data-target=".reff" data-toggle="tab">Refferees Details</a>
+                <a data-target=".reff" data-toggle="tab">Referees Details</a>
               </li>
               <li class="<?php if(isset($active6)){echo 'active';}?>">
                 <a data-target=".addit" data-toggle="tab">Additional Details</a>
@@ -25,20 +25,26 @@
               <li class="<?php if(isset($active7)){echo 'active';}?>">
                 <a data-target=".settings" data-toggle="tab">Upload Documents</a>
               </li>
+              <li class="<?php if(isset($active8)){echo 'active';}?>">
+                <a data-target=".pays" data-toggle="tab">Application fee Details</a>
+              </li>
               <li>
-                  <?php echo form_open('application/submitting',array("id"=>'form1')); ?>
-                  <button id="b" type="submit" class="subtn btn-success btn-large" data-target=".sub"  onclick="con_message()" >
+                 
+                  <form action="<?php echo site_url('application/submitting');?>" method="post" onsubmit='return con_message()'>
+                  <button id="b" type="submit" class="subtn btn-success btn-large" data-target=".sub">
                      <span class="glyphicon glyphicon-send"></span> Submit Application</button>
                   </form>
+                  
               </li>
+              
             </ul>
-        <div class="tab-content" style="display: block;">
+        <div class="tab-content tb" style="display: block;">
             
              <div class="course  in tab-pane <?php if(isset($active1)){echo 'active';}?>">
               <div class='pantop'><h4>Course selection</h4></div>
               <p >
                  <div class='tbs'> 
-                    <?php echo form_open('application'); ?>
+                    <?php echo form_open('application/apply'); ?>
                     
                 <div><p><?php echo form_error('college','<div class="error">','</div>'); ?>
                     <label for="college">College Selection</label>
@@ -46,7 +52,7 @@
                         <option > <?php display_input('college',$Ucollege);?></option>
                       <option >College of Information and Communication Technology</option>
                       <option >College of Natural and Applied Science</option>
-                      <option >College of Engeneering</option>
+                      <option >College of Engineering</option>
                     </select></p>
                </div>
                 <div><p>
@@ -123,6 +129,8 @@
             <?php include_once "additional.php";?>
             
             <?php include_once "upload.php";?>
+            
+            <?php include_once "applipayment.php";?>
             <?php if(isset($submit)){
                echo '<div class="sub tab-pane active">';
                echo '<div class="alert alert-success">'.$submit.'</div></div>';

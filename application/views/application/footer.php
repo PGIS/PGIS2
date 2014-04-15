@@ -10,11 +10,13 @@ enabled: true
     <script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/js/tabcordion.js') ?>"></script>
+   
     <script>
     $(function() {
     $('.tabcordion').tabcordion()
     });
-</script>
+    $('.datepicker').datepicker();
+    </script>
    
     
     <script type="text/javascript">
